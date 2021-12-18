@@ -9,16 +9,30 @@ const creditCardControl = () => {
   let isEven = true;
   let isSum = true;
   let isCheckDigit = true;
+  let isDifferent = false;
 
   let cc = document.getElementById("inputCC").value;
   let cd = document.getElementById("myCheck").checked;
 
-  // Girdi içinde sayı ve orta çizgi olmayan bir karakter var mı?
+  // Girdi içinde rakam ve orta çizgi olmayan bir karakter var mı?
   for (let e of cc) {
     if (e >= 0 && e <= 9) {
       ccArr.push(parseInt(e));
     } else if (!(e == "-")) {
       isNumberDigit = false;
+    }
+  }
+
+  // En az iki rakam farklı mı?
+  for (let e of ccArr) {
+    let count = 0;
+    for (let f of ccArr) {
+      if (e !== f) {
+        count++;
+        if (count >= 2) {
+          isDifferent = true;
+        }
+      }
     }
   }
 
@@ -58,11 +72,18 @@ const creditCardControl = () => {
       " isSum: " +
       isSum +
       " isCheckDigit: " +
-      isCheckDigit
+      isCheckDigit +
+      " isDifferent: " +
+      isDifferent
   );
 
   result.innerHTML =
-    isSixteenDigit && isNumberDigit && isEven && isSum && isCheckDigit
+    isSixteenDigit &&
+    isNumberDigit &&
+    isEven &&
+    isSum &&
+    isCheckDigit &&
+    isDifferent
       ? "Valid"
       : "Invalid";
 };
